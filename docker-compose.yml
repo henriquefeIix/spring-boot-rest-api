@@ -1,0 +1,55 @@
+version: '3'
+
+services:
+  library:
+    build: .
+    image: henriquefelix/library-api
+    container_name: library
+    command: sh -c '/wait-for-it.sh mysql:3306 -t 0 && catalina.sh run'
+    ports:
+      - 8080:8080
+    environment:
+      DATABASE_URL: mysql
+      DATABASE_USERNAME: root
+      DATABASE_PASSWORD: root
+      DATABASE_SCHEMA: library
+      EMAIL_SERVER_URL: mailslurper
+    depends_on:
+      - mysql
+      - mailslurper
+    networks:
+      - library-network
+    restart: always
+    
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    ports:
+      - 3306:3306
+    volumes:
+      - library:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: library
+      MYSQL_ROOT_PASSWORD: root
+    networks:
+      - library-network
+    restart: always
+   
+  mailslurper:
+    image: marcopas/docker-mailslurper
+    container_name: mailslurper
+    ports:
+      - 2500:2500
+      - 8085:8085
+      - 8081:8080
+    networks:
+      - library-network
+    restart: always
+
+volumes:
+  library:
+    external: true
+
+networks:
+  library-network:
+    driver: bridge

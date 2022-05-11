@@ -1,0 +1,22 @@
+{"properties": [
+  {
+    "name": "application.mail.properties.content",
+    "type": "java.lang.String",
+    "description": "A description for 'application.mail.properties.content'"
+  },
+  {
+    "name": "application.mail.properties.subject",
+    "type": "java.lang.String",
+    "description": "A description for 'application.mail.properties.subject'"
+  },
+  {
+    "name": "application.mail.properties.sender",
+    "type": "java.lang.String",
+    "description": "A description for 'application.mail.properties.sender'"
+  },
+  {
+    "name": "application.mail.properties.cron",
+    "type": "java.lang.String",
+    "description": "A description for 'application.mail.properties.cron'"
+  }
+]}
